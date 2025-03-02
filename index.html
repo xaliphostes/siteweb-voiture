@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voitures de Sport Premium</title>
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary-color: #e60000;
+            --secondary-color: #1a1a1a;
+            --text-color: #333;
+            --light-color: #f5f5f5;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset et style de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-highlight {
+            color: var(--primary-color);
+            margin-left: 5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Bannière */
+        .banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('./media/showroom.jpeg') center/cover no-repeat;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+
+        .banner h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background-color: #cc0000;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Section principale */
+        .main {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 1rem auto;
+        }
+
+        /* Grille de voitures */
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Carte de voiture */
+        .car-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .car-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .car-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s ease;
+        }
+
+        .car-card:hover .car-image img {
+            transform: scale(1.1);
+        }
+
+        .car-info {
+            padding: 1.5rem;
+        }
+
+        .car-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .car-price {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .car-specs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .car-spec {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .car-spec span:first-child {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .car-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+        }
+
+        .close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .modal-body {
+                flex-direction: row;
+                gap: 2rem;
+            }
+        }
+
+        .modal-image {
+            flex: 1;
+            max-height: 300px;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-details {
+            flex: 1;
+        }
+
+        .modal-price {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .modal-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .modal-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-spec {
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-spec-label {
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .modal-buttons {
+            margin-top: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #d0d0d0;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background-color: #c8c8c8;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav {
+                margin-top: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav li {
+                margin: 0.5rem;
+            }
+
+            .banner {
+                height: 300px;
+            }
+
+            .banner h1 {
+                font-size: 2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Section À propos */
+        .about-section {
+            padding: 4rem 0;
+            background-color: #f9f9f9;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .about-content {
+                flex-direction: row;
+            }
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .about-text h4 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .about-text ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">SportCars<span class="logo-highlight">Premium</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#cars">Nos Voitures</a></li>
+                    <li><a href="#about">À Propos</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Bannière -->
+    <section class="banner" id="home">
+        <h1>Voitures de Sport d'Exception</h1>
+        <p>Découvrez notre sélection exclusive de voitures de sport pour les passionnés d'automobile et de performances
+        </p>
+        <a href="#cars" class="btn">Voir nos modèles</a>
+    </section>
+
+    <!-- Section principale -->
+    <main class="main" id="cars">
+        <div class="section-title">
+            <h2>Nos Voitures de Sport</h2>
+        </div>
+
+        <div class="cars-grid" id="cars-container">
+            <!-- Les cartes de voitures seront générées dynamiquement ici -->
+        </div>
+    </main>
+
+    <!-- Section À propos -->
+    <section class="about-section" id="about">
+        <div class="main">
+            <div class="section-title">
+                <h2>À Propos</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="./media/showroom.jpeg" alt="Notre showroom">
+                </div>
+                <div class="about-text">
+                    <h3>SportCars Premium</h3>
+                    <p>Fondée en 2005, SportCars Premium est devenue la référence dans la vente de voitures de sport
+                        d'exception en France. Notre passion pour l'automobile et notre expertise nous permettent de
+                        sélectionner les plus beaux modèles pour nos clients exigeants.</p>
+                    <p>Notre showroom parisien vous accueille dans un cadre prestigieux où vous pourrez découvrir notre
+                        collection exclusive de sportives et hypercars. Chaque voiture est sélectionnée avec soin pour
+                        sa performance, son design et son caractère unique.</p>
+                    <h4>Notre Mission</h4>
+                    <p>Offrir une expérience d'achat exceptionnelle et personnalisée pour les passionnés d'automobiles
+                        sportives, en proposant les modèles les plus exclusifs et en garantissant un service à la
+                        hauteur de vos attentes.</p>
+                    <h4>Nos Services</h4>
+                    <ul>
+                        <li>Vente de voitures neuves et d'occasion</li>
+                        <li>Recherche personnalisée de modèles rares</li>
+                        <li>Essais sur route et circuit</li>
+                        <li>Service après-vente dédié</li>
+                        <li>Financement sur mesure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="car-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Détails de la voiture</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="" alt="Car Image">
+                </div>
+                <div class="modal-details">
+                    <div class="modal-price"></div>
+                    <div class="modal-description"></div>
+                    <div class="modal-specs">
+                        <div class="modal-spec">
+                            <span class="modal-spec-label">Moteur:</span>
+                            <span class="modal-spec-value engine"></span>
+                        </div>
+                        <div class="modal-spec">
+                            <span class="modal-spec-label">Puissance:</span>
+                            <span class="modal-spec-value power"></span>
+                        </div>
+                        <div class="modal-spec">
+                            <span class="modal-spec-label">0-100 km/h:</span>
+                            <span class="modal-spec-value acceleration"></span>
+                        </div>
+                        <div class="modal-spec">
+                            <span class="modal-spec-label">Vitesse Max:</span>
+                            <span class="modal-spec-value top-speed"></span>
+                        </div>
+                        <div class="modal-spec">
+                            <span class="modal-spec-label">Transmission:</span>
+                            <span class="modal-spec-value transmission"></span>
+                        </div>
+                        <div class="modal-spec">
+                            <span class="modal-spec-label">Carburant:</span>
+                            <span class="modal-spec-value fuel"></span>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="btn">Demander un essai</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SportCars Premium</h3>
+                    <p>Nous sommes spécialisés dans la vente de voitures de sport haut de gamme. Notre passion pour
+                        l'automobile nous anime depuis plus de 20 ans.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">F</a>
+                        <a href="#" class="social-link">T</a>
+                        <a href="#" class="social-link">I</a>
+                        <a href="#" class="social-link">Y</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens Rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#cars">Nos Voitures</a></li>
+                        <li><a href="#about">À Propos</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Mentions Légales</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column" id="contact">
+                    <h3>Nous Contacter</h3>
+                    <ul class="footer-links">
+                        <li>123 Avenue des Champs-Élysées</li>
+                        <li>75008 Paris, France</li>
+                        <li>Tél: +33 1 23 45 67 89</li>
+                        <li>Email: contact@sportcars-premium.fr</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 SportCars Premium. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Données des voitures
+        const carsData = [
+            {
+                id: 1,
+                name: "Ferrari F8 Tributo",
+                price: "€260,000",
+                image: "./media/Ferrari-F8 Tributo.jpeg",
+                description: "La Ferrari F8 Tributo est l'hommage de la marque à son moteur V8 biturbo, élu quatre années consécutives moteur de l'année. Avec son design aérodynamique et ses performances exceptionnelles, elle offre une expérience de conduite digne des meilleurs circuits.",
+                engine: "V8 biturbo 3.9L",
+                power: "720 ch",
+                acceleration: "2.9 secondes",
+                topSpeed: "340 km/h",
+                transmission: "Automatique 7 vitesses",
+                fuel: "Essence"
+            },
+            {
+                id: 2,
+                name: "Lamborghini Huracán EVO",
+                price: "€230,000",
+                image: "./media/Lamborghini-Huracan-EVO.jpeg",
+                description: "La Huracán EVO représente l'évolution de la supercar emblématique de Lamborghini. Dotée du système Lamborghini Dinamica Veicolo Integrata, elle offre une dynamique de conduite inégalée et un contrôle total en toutes circonstances.",
+                engine: "V10 5.2L",
+                power: "640 ch",
+                acceleration: "2.9 secondes",
+                topSpeed: "325 km/h",
+                transmission: "Automatique 7 vitesses",
+                fuel: "Essence"
+            },
+            {
+                id: 3,
+                name: "Porsche 911 GT3",
+                price: "€180,000",
+                image: "./media/Porsche-911-GT3.jpeg",
+                description: "La Porsche 911 GT3 incarne l'essence même de la sportivité selon Porsche. Avec son moteur atmosphérique, sa précision chirurgicale et son héritage de course automobile, elle offre des sensations de pilotage pures et authentiques.",
+                engine: "Boxer 6 cylindres 4.0L",
+                power: "510 ch",
+                acceleration: "3.4 secondes",
+                topSpeed: "318 km/h",
+                transmission: "PDK 7 vitesses",
+                fuel: "Essence"
+            },
+            {
+                id: 4,
+                name: "McLaren 720S",
+                price: "€255,000",
+                image: "./media/McLaren-720S.jpeg",
+                description: "La McLaren 720S est le parfait équilibre entre performance exceptionnelle et utilisation quotidienne. Son châssis en carbone, sa technologie dérivée de la F1 et son aérodynamique avancée en font une référence dans sa catégorie.",
+                engine: "V8 biturbo 4.0L",
+                power: "720 ch",
+                acceleration: "2.8 secondes",
+                topSpeed: "341 km/h",
+                transmission: "Automatique 7 vitesses",
+                fuel: "Essence"
+            },
+            {
+                id: 5,
+                name: "Aston Martin DBS Superleggera",
+                price: "€280,000",
+                image: "./media/Aston-Martin-DBS-Superleggera.jpeg",
+                description: "La DBS Superleggera est le fleuron de la gamme Aston Martin. Alliance parfaite entre élégance britannique et performances brutales, elle incarne le grand tourisme sportif par excellence avec son raffinement incomparable.",
+                engine: "V12 biturbo 5.2L",
+                power: "725 ch",
+                acceleration: "3.4 secondes",
+                topSpeed: "340 km/h",
+                transmission: "Automatique 8 vitesses",
+                fuel: "Essence"
+            },
+            {
+                id: 6,
+                name: "Bugatti Chiron",
+                price: "€3,000,000",
+                image: "./media/Bugatti-Chiron.jpeg",
+                description: "La Bugatti Chiron est l'hypercar ultime, repoussant toutes les limites de l'automobile. Sa puissance phénoménale, sa vitesse stratosphérique et son luxe absolu en font l'une des voitures les plus exclusives et impressionnantes jamais créées.",
+                engine: "W16 quadriturbo 8.0L",
+                power: "1500 ch",
+                acceleration: "2.4 secondes",
+                topSpeed: "420 km/h",
+                transmission: "Automatique 7 vitesses",
+                fuel: "Essence"
+            }
+        ];
+
+        // Éléments DOM
+        const modal = document.getElementById('car-modal');
+        const modalTitle = document.querySelector('.modal-title');
+        const modalImage = document.querySelector('.modal-image img');
+        const modalPrice = document.querySelector('.modal-price');
+        const modalDescription = document.querySelector('.modal-description');
+        const modalEngine = document.querySelector('.modal-spec-value.engine');
+        const modalPower = document.querySelector('.modal-spec-value.power');
+        const modalAcceleration = document.querySelector('.modal-spec-value.acceleration');
+        const modalTopSpeed = document.querySelector('.modal-spec-value.top-speed');
+        const modalTransmission = document.querySelector('.modal-spec-value.transmission');
+        const modalFuel = document.querySelector('.modal-spec-value.fuel');
+        const closeBtn = document.querySelector('.close');
+
+        // Ouvrir le modal avec les détails de la voiture
+        function openModal(carId) {
+            const car = carsData.find(car => car.id === carId);
+
+            if (car) {
+                modalTitle.textContent = car.name;
+                modalImage.src = car.image;
+                modalImage.alt = car.name;
+                modalPrice.textContent = car.price;
+                modalDescription.textContent = car.description;
+                modalEngine.textContent = car.engine;
+                modalPower.textContent = car.power;
+                modalAcceleration.textContent = car.acceleration;
+                modalTopSpeed.textContent = car.topSpeed;
+                modalTransmission.textContent = car.transmission;
+                modalFuel.textContent = car.fuel;
+
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Empêcher le défilement du body
+            }
+        }
+
+        // Fermer le modal
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto'; // Réactiver le défilement du body
+        }
+
+        // Fonction pour générer dynamiquement les cartes de voitures
+        function generateCarCards() {
+            const carsContainer = document.getElementById('cars-container');
+
+            carsData.forEach(car => {
+                // Créer les éléments HTML pour chaque voiture
+                const carCard = document.createElement('div');
+                carCard.className = 'car-card';
+                carCard.dataset.id = car.id;
+
+                carCard.innerHTML = `
+                    <div class="car-image">
+                        <img src="${car.image}" alt="${car.name}">
+                    </div>
+                    <div class="car-info">
+                        <h3 class="car-name">${car.name}</h3>
+                        <div class="car-price">${car.price}</div>
+                        <div class="car-specs">
+                            <div class="car-spec">
+                                <span>${car.power}</span>
+                                <span>Puissance</span>
+                            </div>
+                            <div class="car-spec">
+                                <span>${car.acceleration.split(' ')[0]}</span>
+                                <span>0-100 km/h</span>
+                            </div>
+                            <div class="car-spec">
+                                <span>${car.topSpeed}</span>
+                                <span>Vitesse Max</span>
+                            </div>
+                        </div>
+                        <div class="car-buttons">
+                            <button class="btn btn-secondary more-info-btn">Plus d'info</button>
+                            <button class="btn">Réserver</button>
+                        </div>
+                    </div>
+                `;
+
+                // Ajouter la carte au conteneur
+                carsContainer.appendChild(carCard);
+
+                // Ajouter l'événement pour le bouton "Plus d'info"
+                const moreInfoBtn = carCard.querySelector('.more-info-btn');
+                moreInfoBtn.addEventListener('click', () => {
+                    openModal(car.id);
+                });
+            });
+        }
+
+        // Événements pour la fenêtre modale
+        closeBtn.addEventListener('click', closeModal);
+
+        // Fermer le modal en cliquant en dehors du contenu
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Fermer le modal avec la touche Echap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+
+        // Animation au défilement
+        window.addEventListener('scroll', () => {
+            const carCards = document.querySelectorAll('.car-card');
+
+            carCards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (cardTop < windowHeight * 0.9) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Générer les cartes de voitures
+            generateCarCards();
+
+            // Configurer les animations
+            const carCards = document.querySelectorAll('.car-card');
+            carCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+            });
+
+            // Déclencher l'animation initiale
+            setTimeout(() => {
+                window.dispatchEvent(new Event('scroll'));
+            }, 100);
+        });
+
+        // Défilement fluide pour la navigation
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80, // Ajustement pour le header fixe
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
