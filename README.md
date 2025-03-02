@@ -1,1 +1,1 @@
-# <a href="https://github.com/xaliphostes/siteweb-voiture/settings/pages">Site web de voitures de sport</a>
+# <a href="https://xaliphostes.github.io/siteweb-voiture/">Site web de voitures de sport</a>
